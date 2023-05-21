@@ -1,0 +1,27 @@
+[package]
+name = "server"
+version = "0.1.0"
+edition = "2021"
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[dependencies]
+actix-web = "4"
+serde = { version = "1", features = ["derive"] }
+serde_json = { version = "1" }
+config = { version = "0.13.3", features = ["json", "yaml", "toml"] }
+chrono = { version = "0.4", features = ["serde"] }
+uuid = { version = "1.3.2", features = ["serde", "v4", "fast-rng", "macro-diagnostics"] }
+rusqlite = { version = "0.28", features = ["bundled", "serde_json", "chrono", "backup", "blob", "uuid", "modern_sqlite"] }
+r2d2 = "0.8"
+r2d2_sqlite = "0.21"
+refinery = { version = "0.8", features = ["rusqlite"] }
+env_logger = { version = "0.10.0" }
+mime_guess = { version = "2.0.4" }
+futures = { version = "0.3.28" }
+hex = { version = "0.4" }
+blake2 = { version = "0.10.6" }
+hex-literal = {version = "0.4.1"}
+[[bin]]
+name = "http"
+path = "src/http.rs"

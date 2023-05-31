@@ -8,13 +8,16 @@ import {createHeadlessEditor} from '@lexical/headless';
 import styled, {IStyledComponent} from "styled-components";
 import {ImageNode} from "../lexical/nodes/ImageNode.tsx";
 
+
 const ViewerStyledComponent:IStyledComponent<"web", "div", never> = styled.div`
     width: ${props=> props.$inputWidth}px;
+    max-height: ${props=> props.$inputMaxHeight}vh;
+    overflow: scroll;
 `;
 
 export default function Viewer(params: { width:number, noteId: uuid, body: SerializedEditorState }): JSX.Element {
     const [html,setHtml] = useState<string>("<div></div>");
-
+    const [maxHeight,setMaxHeight] = useState<number>(50);
     useEffect(()=>{
         const editor = createHeadlessEditor({
             namespace: `note-${params.noteId}`,
@@ -33,8 +36,12 @@ export default function Viewer(params: { width:number, noteId: uuid, body: Seria
         });
     },[]);
 
+    useEffect(()=>{
+        setMaxHeight(Math.floor(Math.random() * (80 - 40) + 40));
+    }, [])
+
     // @ts-ignore
-    return <ViewerStyledComponent $inputWidth={params.width} dangerouslySetInnerHTML={{__html:html}}/>
+    return <ViewerStyledComponent $inputMaxHeight={maxHeight} $inputWidth={params.width} dangerouslySetInnerHTML={{__html:html}}/>
 }
 
 

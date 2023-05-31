@@ -40,13 +40,11 @@ import ToolbarPlugin from '../../lexical/plugins/ToolbarPlugin';
 import YouTubePlugin from '../../lexical/plugins/YouTubePlugin';
 import PlaygroundEditorTheme from '../../lexical/themes/PlaygroundEditorTheme.ts';
 import ContentEditable from '../../lexical/ui/ContentEditable.tsx';
-import Placeholder from '../../lexical/ui/Placeholder.tsx';
 import {uuid} from "../../records/record.ts";
+import RecordPlugin from "../../lexical/plugins/RecordPlugin";
 
-export default function bEditor(params: { noteId: uuid,namespace: string}): JSX.Element {
+export default function Editor(params: { noteId: uuid,namespace: string}): JSX.Element {
     const {historyState} = useSharedHistoryContext();
-    const text = '';
-    const placeholder = <Placeholder>{text}</Placeholder>;
     const [floatingAnchorElem, setFloatingAnchorElem] =
         useState<HTMLDivElement | null>(null);
     const [isSmallWidthViewport, setIsSmallWidthViewport] =
@@ -56,15 +54,6 @@ export default function bEditor(params: { noteId: uuid,namespace: string}): JSX.
         if (_floatingAnchorElem !== null) {
             setFloatingAnchorElem(_floatingAnchorElem);
         }
-    };
-
-    const cellEditorConfig = {
-        namespace: params.namespace,
-        nodes: [...TableCellNodes],
-        onError: (error: Error) => {
-            throw error;
-        },
-        theme: PlaygroundEditorTheme,
     };
 
     useEffect(() => {
@@ -83,6 +72,15 @@ export default function bEditor(params: { noteId: uuid,namespace: string}): JSX.
             window.removeEventListener('resize', updateViewPortWidth);
         };
     }, [isSmallWidthViewport]);
+
+    const cellEditorConfig = {
+        namespace: params.namespace,
+        nodes: [...TableCellNodes],
+        onError: (error: Error) => {
+            throw error;
+        },
+        theme: PlaygroundEditorTheme,
+    };
 
     return (
         <>
@@ -109,7 +107,7 @@ export default function bEditor(params: { noteId: uuid,namespace: string}): JSX.
                             </div>
                         </div>
                     }
-                    placeholder={placeholder}
+                    placeholder={null}
                     ErrorBoundary={LexicalErrorBoundary}
                 />
                 <MarkdownShortcutPlugin/>
@@ -135,6 +133,7 @@ export default function bEditor(params: { noteId: uuid,namespace: string}): JSX.
                 <ImagesPlugin/>
                 <LinkPlugin/>
                 <YouTubePlugin/>
+                <RecordPlugin/>
                 <HorizontalRulePlugin/>
                 <EquationsPlugin/>
                 <TabFocusPlugin/>

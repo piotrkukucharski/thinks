@@ -5,6 +5,30 @@ export type uuid = string;
 
 export const isUuid = (value: unknown): value is uuid => typeof value === 'string' && uuidValidate(value) && (uuidVersion(value) === 4);
 
+
+const RecordSchema = {
+    title: 'record',
+    version: 0,
+    primaryKey: 'id',
+    type: 'object',
+    properties: {
+        id: {
+            type: 'string',
+            maxLength: 100,
+        },
+        mimeType: {
+            type: 'string',
+            maxLength: 100,
+        },
+        body:{
+            type: 'object',
+        },
+        updatedAt: {
+            type: typeof Date,
+        },
+    },
+};
+
 export type Record = {
     readonly id: uuid,
     readonly mime_type: string,

@@ -14,7 +14,7 @@ enhancing the organization and structure of your notes.
 * Rethink organization of code mostly for front
 * Addition of support for an upload and file review
 * Start using in RxDatabase
-* Adding attributes to records
+* Adding attributes for records
 * Rethink design(what is there now cannot be called a thoughtful design)
 
 ## Features
